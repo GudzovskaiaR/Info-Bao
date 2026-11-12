@@ -1,0 +1,67 @@
+{
+	"permissions": {
+		"ask": [
+			"Bash(npm run deploy*)",
+			"Bash(npm run wpdeploy*)",
+			"Bash(npm run git*)",
+			"Bash(npm run zip*)",
+			"Bash(npm run tmp*)",
+			"Bash(git push*)",
+			"PowerShell(npm run deploy*)",
+			"PowerShell(npm run wpdeploy*)",
+			"PowerShell(npm run git*)",
+			"PowerShell(npm run zip*)",
+			"PowerShell(npm run tmp*)",
+			"PowerShell(git push*)"
+		]
+	},
+	"hooks": {
+		"PreToolUse": [
+			{
+				"matcher": "Edit|Write|MultiEdit",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/protect-template.mjs\"",
+						"timeout": 10
+					}
+				]
+			}
+		],
+		"PostToolUse": [
+			{
+				"matcher": "Edit|Write|MultiEdit",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/check-scss.mjs\"",
+						"timeout": 10
+					}
+				]
+			}
+		],
+		"SessionStart": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/build-check.mjs\" baseline",
+						"timeout": 30
+					}
+				]
+			}
+		],
+		"Stop": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/build-check.mjs\"",
+						"timeout": 300,
+						"statusMessage": "Перевіряю збірку..."
+					}
+				]
+			}
+		]
+	}
+}

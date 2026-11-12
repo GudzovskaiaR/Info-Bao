@@ -1,0 +1,36 @@
+// Базові стилі доступності
+// Перехід до вмісту для користувачів клавіатури
+.skip-link {
+	position: fixed;
+	top: 10px;
+	left: 10px;
+	z-index: 1000;
+	padding: 10px 20px;
+	color: #fff;
+	background-color: #000;
+	transform: translateY(-200%);
+	&:focus {
+		transform: none;
+	}
+}
+// Видимий фокус для клавіатури
+:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
+// main отримує фокус лише після переходу за .skip-link
+main:focus-visible {
+	outline: none;
+}
+// Зменшення анімацій за налаштуванням системи
+// (тривалість не нульова, щоб спрацьовували події transitionend та animationend)
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
