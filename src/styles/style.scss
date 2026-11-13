@@ -1,53 +1,56 @@
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Підключення загальних змінних
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-@use "variables";
+@use 'variables';
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Підключення стилів доступності
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-@use "a11y";
+@use 'a11y';
+
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Підключення загальних віддалених шрифтів (Google Fonts)
 // Використовуйте плагін для VS Code Better Google Fonts for VS Code (https://marketplace.visualstudio.com/items?itemName=Pavlo-K.better-google-fonts)
+@import url('https://fonts.googleapis.com/css?family=Roboto:regular,500&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display:regular,500&display=swap');
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Стилі тега BODY
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 body {
-	color: var(--main-color);
-	font-family: var(--font-family);
-	font-size: var(--font-size);
+    color: var(--main-color);
+    font-family: var(--font-family);
+    font-size: var(--font-size);
 
-	min-width: #{$minWidth}px;
+    min-width: #{$minWidth}px;
 
-	// Скролл заблоковано
-	[data-fls-scrolllock] & {
-		overflow: hidden;
-		touch-action: none;
-		overscroll-behavior: none;
-	}
-	// Сайт завантажений
-	[data-fls-loaded] & {
-	}
+    // Скролл заблоковано
+    [data-fls-scrolllock] & {
+        overflow: hidden;
+        touch-action: none;
+        overscroll-behavior: none;
+    }
+    // Сайт завантажений
+    [data-fls-loaded] & {
+    }
 }
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Оболонка WRAPPER
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 .wrapper {
-	min-height: 100%;
-	display: flex;
-	flex-direction: column;
-	overflow: clip;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: clip;
 
-	// Притискаємо footer
-	> main {
-		flex: 1 1 auto;
-	}
-	// Фікс для слайдерів
-	> * {
-		min-width: 0;
-	}
+    // Притискаємо footer
+    > main {
+        flex: 1 1 auto;
+    }
+    // Фікс для слайдерів
+    > * {
+        min-width: 0;
+    }
 }
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Обмежуючий контейнер
@@ -57,49 +60,106 @@ body {
 // Наприклад header__container, main__container і т.п.
 // Сніппет (HTML): cnt
 @if ($responsiveType==1) {
-	// Чуйна
-	[class*="__container"] {
-		@if ($maxWidthContainer>0) {
-			max-width: #{$containerWidth}px;
-			margin: 0 auto;
-		}
-		@if ($containerPadding>0) {
-			@if ($maxWidthContainer>0) {
-				padding-left: #{math.div($containerPadding, 2)}px;
-				padding-right: #{math.div($containerPadding, 2)}px;
-			} @else {
-				@include adaptiveValue("padding-left", math.div($containerPadding, 2), 15);
-				@include adaptiveValue("padding-right", math.div($containerPadding, 2), 15);
-			}
-		}
-	}
+    // Чуйна
+    [class*='__container'] {
+        @if ($maxWidthContainer>0) {
+            max-width: #{$containerWidth}px;
+            margin: 0 auto;
+        }
+        @if ($containerPadding>0) {
+            @if ($maxWidthContainer>0) {
+                padding-left: #{math.div($containerPadding, 2)}px;
+                padding-right: #{math.div($containerPadding, 2)}px;
+            } @else {
+                @include adaptiveValue(
+                    'padding-left',
+                    math.div($containerPadding, 2),
+                    15
+                );
+                @include adaptiveValue(
+                    'padding-right',
+                    math.div($containerPadding, 2),
+                    15
+                );
+            }
+        }
+    }
 } @else {
-	// Брейк-поїнтами
-	[class*="__container"] {
-		margin: 0 auto;
-		@if ($maxWidthContainer>0) {
-			max-width: #{$maxWidthContainer}px;
-		} @else {
-			@if ($containerPadding>0) {
-				padding-left: #{math.div($containerPadding, 2)}px;
-				padding-right: #{math.div($containerPadding, 2)}px;
-			}
-		}
-		@media (max-width: toEm($pc)) {
-			max-width: 970px;
-		}
-		@media (max-width: toEm($tablet)) {
-			max-width: 750px;
-		}
-		@media (max-width: toEm($mobile)) {
-			max-width: none;
-			@if ($containerPadding>0 and $maxWidthContainer>0) {
-				padding-left: #{math.div($containerPadding, 2)}px;
-				padding-right: #{math.div($containerPadding, 2)}px;
-			}
-		}
-	}
+    // Брейк-поїнтами
+    [class*='__container'] {
+        margin: 0 auto;
+        @if ($maxWidthContainer>0) {
+            max-width: #{$maxWidthContainer}px;
+        } @else {
+            @if ($containerPadding>0) {
+                padding-left: #{math.div($containerPadding, 2)}px;
+                padding-right: #{math.div($containerPadding, 2)}px;
+            }
+        }
+        @media (max-width: toEm($pc)) {
+            max-width: 970px;
+        }
+        @media (max-width: toEm($tablet)) {
+            max-width: 750px;
+        }
+        @media (max-width: toEm($mobile)) {
+            max-width: none;
+            @if ($containerPadding>0 and $maxWidthContainer>0) {
+                padding-left: #{math.div($containerPadding, 2)}px;
+                padding-right: #{math.div($containerPadding, 2)}px;
+            }
+        }
+    }
 }
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Загальні стилі для усього сайту
+
+// -----------------Title------------------------------
+.title {
+    color: #fff;
+    font-family: 'Playfair Display';
+    line-height: 1.33;
+    @include adaptiveValue('font-size', 47, 25);
+}
+// -----------------Logo------------------------------
+.logo {
+    color: var(--white-color);
+    font-size: 36px;
+    line-height: 1.33;
+    text-transform: uppercase;
+    @include adaptiveValue('font-size', 36, 20);
+
+    &--footer {
+        font-size: 24px;
+        color: var(--white-color);
+    }
+    &--white {
+        color: var(--white-color);
+    }
+}
+// -----------------Button------------------------------
+.button {
+    font-family:'Playfair Display';
+    line-height: 1.3;
+
+    &--hero {
+        font-size: 13px;
+        padding-inline: 13px;
+        padding-top: 8px;
+        padding-bottom: 9px;
+        border: solid 1px #fff;
+        color: #fff;
+        transition:
+            background-color ease 0.5s,
+            color ease 0.5s,
+            border-color ease 0.5s;
+        @media (any-hover: hover) {
+            &:hover {
+                background-color: var(--silver-gray-color);
+                color: var(--dark-charcoal-color);
+                border-color:var(--dark-charcoal-color);
+            }
+        }
+    }
+}
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

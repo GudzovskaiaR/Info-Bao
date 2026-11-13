@@ -1,5 +1,22 @@
 .header {
-	// .header__container
-	&__container {
-	}
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+
+
+  // .header__container
+
+  &__container {
+	   }
+  &__body{
+   display: flex;
+		align-items: center;
+		justify-content: space-between;
+    padding-inline: 27px;
+    @include adaptiveValue("padding-block",24 ,15 );
+  }
 }
+
+
